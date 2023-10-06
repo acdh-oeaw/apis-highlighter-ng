@@ -25,3 +25,9 @@ def highlight_text(obj, project_id=None):
             + text[ann.start :]
         )
     return mark_safe(text)
+
+
+@register.filter()
+def content_type_id(obj):
+    ct = ContentType.objects.get_for_model(obj)
+    return ct.id
