@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "apis-highlighter-ng"
+version = "0.1.0"
+description = "Highlighter for the APIS project"
+authors = ["Birger Schacht <birger.schacht@oeaw.ac.at>"]
+license = "MIT"
+packages = [{include = "apis_highlighter"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+Django = "^4.1"
+
+[tool.poetry.group.dev]
+optional = true
+[tool.poetry.group.dev.dependencies]
+black = "22.12"
+djlint = "^1.31.1"
+ruff = "^0.0.292"
+
+[build-system]
+requires = ["poetry-core>=1.2.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.djlint]
+indent=2
+profile="django"
+extension="html"
+blank_line_before_tag="block,if"
+blank_line_after_tag="endif,endblock"
+format_js=false
