@@ -23,7 +23,7 @@ class AnnotationsView(View):
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        return HttpResponse(highlight_text(self.object, self.project_id))
+        return HttpResponse(highlight_text(self.object, project_id=self.project_id))
 
 
 # wrapper around the `save_ajax_form` method from apis_relations.views

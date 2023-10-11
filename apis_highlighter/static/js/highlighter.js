@@ -26,7 +26,7 @@ highlighttexts.forEach(text => {
       newel.classList.add("highlighter-tmp");
       newel.classList.add("text-danger");
       selection.getRangeAt(0).surroundContents(newel);
-      $(newel).popover({content: menu(annotationdata), html: true});
+      $(newel).popover({content: menu(annotationdata, text), html: true});
       $(newel).popover("show");
     }
   });
@@ -36,6 +36,7 @@ highlighttexts.forEach(text => {
   });
 
 });
+
 var native_EntityRelationForm_response = EntityRelationForm_response;
 EntityRelationForm_response = function(response) {
   console.log("override EntityRelationForm_response");
@@ -54,17 +55,16 @@ function cleanup() {
   });
 }
 
-function replace(text_content_type_id, text_object_id) {
-  console.log("replace: " + text_content_type_id + " - " + text_object_id);
-  fetch("/highlighter/annotations/"+ text_content_type_id + "/" + text_object_id)
+function replace(element) {
+  console.log("replace");
+  fetch(element.dataset.source)
     .then((response) => response.text())
     .then((text) => {
-       textelement = document.querySelector('[data-text_object_id="'+text_object_id+'"][data-text_content_type_id="'+text_content_type_id+'"]');
-       textelement.innerHTML = text;
+       element.outerHTML = text;
     });
 }
 
-function menu(annotationdata) {
+function menu(annotationdata, textelement) {
   var menu = document.createElement("div");
   menu.classList.add("highlighter-menu");
   // this should definitly not be hardcoded
@@ -82,7 +82,7 @@ function menu(annotationdata) {
       form.action = "/highlighter" + form.getAttribute("action").trim();
       document.addEventListener("formresponse", function(event) {
           cleanup();
-          replace(annotationdata.text_content_type_id, annotationdata.text_object_id);
+          replace(textelement);
       }, { once: true });
       menu.innerHTML = '<h3>' + item + '</h3>';
       menu.appendChild(form);
