@@ -1,0 +1,11 @@
+.highlight-text {
+  background-color: rgba(0,0,0,.03);
+  padding: 1em;
+  border: 1px solid lightgrey;
+}
+.select2-container--open {
+    z-index: 9999999
+}
+.popover{
+    max-width: 100%;
+}
