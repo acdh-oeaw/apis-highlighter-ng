@@ -1,43 +1,54 @@
 highlighttexts = document.querySelectorAll(".highlight-text");
 highlighttexts.forEach(text => {
-  text.addEventListener("pointerup", function(event) {
+  // we are adding the event listeners to the parents of the
+  // .highlight-text divs, because the divs are being replaced
+  // during during operation and with the replacement the
+  // eventListeners will be gone, too.
+  parentn = text.parentNode;
+  parentn.addEventListener("pointerup", function(event) {
     selection = document.getSelection();
-    if (!selection.isCollapsed) {
-      var annotationdata = {};
+    highlight_text = selection.anchorNode.parentElement.closest(".highlight-text");
+    if (!selection.isCollapsed && highlight_text) {
 
-      highlight_text = selection.anchorNode.parentElement.closest(".highlight-text");
+      // this block is copied from the original highlighter
+      // does the trick, not sure how
+      range = window.getSelection().getRangeAt(0);
+      priorRange = range.cloneRange();
+      priorRange.selectNodeContents(highlight_text);
+      priorRange.setEnd(range.startContainer, range.startOffset);
+      shadow_selection = priorRange.cloneContents();
+      console.log(shadow_selection);
+      const num_brs = shadow_selection.querySelectorAll("br").length;
+      start = priorRange.toString().length + num_brs;
+      end = start + range.toString().length;
+
+      var annotationdata = {};
       annotationdata.text_object_id = highlight_text.dataset.text_object_id;
       annotationdata.text_content_type_id = highlight_text.dataset.text_content_type_id;
       annotationdata.orig_string = selection.toString();
-
-      start = selection.anchorOffset - 3;
-      length = selection.focusOffset - selection.anchorOffset;
-      prevNode = selection.anchorNode.previousSibling;
-      while (prevNode) {
-        start = start + prevNode.textContent.length;
-        prevNode = prevNode.previousSibling;
-      }
-
       annotationdata.start = start;
-      annotationdata.end = start + length;
-
+      annotationdata.end = end;
       console.log(JSON.stringify(annotationdata));
 
+      // add a helper span around the selection,
+      // so that we can bind the popover to something
       var newel = document.createElement('span');
       newel.classList.add("highlighter-tmp");
       newel.classList.add("text-danger");
       selection.getRangeAt(0).surroundContents(newel);
-      $(newel).popover({content: menu(annotationdata, text), html: true});
+      $(newel).popover({content: menu(annotationdata, highlight_text), html: true});
       $(newel).popover("show");
     }
   });
 
-  text.addEventListener("pointerdown", function(event) {
+  parentn.addEventListener("pointerdown", function(event) {
     cleanup();
   });
 
 });
 
+// this overrides the EntityRelationForm_response from the apis core
+// codebase, so that we can add a eventlistener that reloads the text
 var native_EntityRelationForm_response = EntityRelationForm_response;
 EntityRelationForm_response = function(response) {
   console.log("override EntityRelationForm_response");
