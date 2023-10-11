@@ -37,6 +37,7 @@ def save_ajax_form(
     data = json.loads(resp.content.decode())
     if annotationdata := request.POST.get("annotationdata"):
         annotationdata = json.loads(annotationdata)
+        annotationdata["user"] = request.user
         annotationdata["object_id"] = data["instance"]["relation_pk"]
         annotationdata["content_type"] = ContentType.objects.get_for_model(TempTriple)
         annotationdata["text_content_type"] = ContentType.objects.get_for_id(
