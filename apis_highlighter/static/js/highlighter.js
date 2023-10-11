@@ -8,6 +8,7 @@ highlighttexts.forEach(text => {
       highlight_text = selection.anchorNode.parentElement.closest(".highlight-text");
       annotationdata.text_object_id = highlight_text.dataset.text_object_id;
       annotationdata.text_content_type_id = highlight_text.dataset.text_content_type_id;
+      annotationdata.orig_string = selection.toString();
 
       start = selection.anchorOffset - 3;
       length = selection.focusOffset - selection.anchorOffset;
