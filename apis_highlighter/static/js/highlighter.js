@@ -7,7 +7,7 @@ highlighttexts.forEach(text => {
   parentn = text.parentNode;
   parentn.addEventListener("pointerup", function(event) {
     selection = document.getSelection();
-    if (selection.cloneContents().querySelectorAll("mark").length > 0) {
+    if (selection.getRangeAt(0).cloneContents().querySelectorAll("mark").length > 0) {
       console.log("Already contains mark");
       return;
     }
