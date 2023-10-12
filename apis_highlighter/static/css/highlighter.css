@@ -3,6 +3,10 @@
   padding: 1em;
   border: 1px solid lightgrey;
 }
+.highlight-text > mark {
+  padding: 0;
+  background-color: orange;
+}
 .select2-container--open {
     z-index: 9999999
 }
