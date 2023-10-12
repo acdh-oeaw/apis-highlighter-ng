@@ -29,6 +29,7 @@ highlighttexts.forEach(text => {
       var annotationdata = {};
       annotationdata.text_object_id = highlight_text.dataset.text_object_id;
       annotationdata.text_content_type_id = highlight_text.dataset.text_content_type_id;
+      annotationdata.project_id = highlight_text.dataset.project_id;
       annotationdata.orig_string = selection.toString();
       annotationdata.start = start;
       annotationdata.end = end;

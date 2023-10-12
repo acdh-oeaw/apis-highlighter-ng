@@ -1,8 +1,9 @@
 from django import template
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.utils.safestring import mark_safe
 from django.urls import reverse
-from apis_highlighter.models import Annotation
+from apis_highlighter.models import Annotation, AnnotationProject
 
 register = template.Library()
 
@@ -13,7 +14,11 @@ def overlap(range_one, range_two) -> bool:
 
 
 @register.filter()
-def highlight_text(obj, fieldname="text", project_id=None):
+def highlight_text(obj, request=None, fieldname="text", project_id=None):
+    if project_id is None:
+        default_project = getattr(settings, "DEFAULT_HIGHLIGTHER_PROJECT", None)
+        project_id = request.GET.get("highlighter_project", default_project)
+
     ct = ContentType.objects.get_for_model(obj)
     annotations = Annotation.objects.filter(text_content_type=ct, text_object_id=obj.id)
     args = [ct.id, obj.id]
@@ -26,6 +31,7 @@ def highlight_text(obj, fieldname="text", project_id=None):
         f"<div class='highlight-text'"
         f" data-text_object_id='{obj.id}'"
         f" data-text_content_type_id='{ct.id}'"
+        f" data-project_id='{project_id}'"
         f" data-source='{annotations_url}'>"
     )
     suffix = "</div>"
@@ -68,3 +74,8 @@ def highlight_text(obj, fieldname="text", project_id=None):
     text = text.replace("\n", "<br/>")
 
     return mark_safe(prefix + text + suffix)
+
+
+@register.inclusion_tag("apis_highlighter/select_project.html")
+def select_highlighter_project(request):
+    return {"request": request, "projects": AnnotationProject.objects.all()}
