@@ -7,6 +7,11 @@ from apis_highlighter.models import Annotation
 register = template.Library()
 
 
+def overlap(range_one, range_two) -> bool:
+    r = range(max(range_one[0], range_two[0]), min(range_one[-1], range_two[-1]))
+    return bool(r)
+
+
 @register.filter()
 def highlight_text(obj, fieldname="text", project_id=None):
     ct = ContentType.objects.get_for_model(obj)
@@ -26,15 +31,32 @@ def highlight_text(obj, fieldname="text", project_id=None):
     suffix = "</div>"
 
     text = getattr(obj, fieldname)
+    annotated_ranges = []
     for ann in annotations.order_by("-start"):
-        text = text[: ann.end] + "</mark>" + text[ann.end :]
-        text = (
-            text[: ann.start]
-            + f"<mark data-ann-id='{ann.id}' "
-            + f"data-hl-start='{ann.start}' "
-            + f"data-hl-end='{ann.end}' "
-            + f"data-hl-text-id='{ann.content_object}'>"
-            + text[ann.start :]
-        )
+        if not any(
+            map(lambda x: overlap(range(ann.start, ann.end), x), annotated_ranges)
+        ):
+            annotated_ranges.append(range(ann.start, ann.end))
+            title = (
+                f'Annotation "{ann.orig_string}" '
+                + f"from {ann.user} in project {ann.project}; "
+                + f"pointing to {ann.content_object}"
+            )
+            end = ann.end
+            start = ann.start
+            text = text[:end] + "</mark>" + text[end:]
+            text = (
+                text[:start]
+                + f"<mark data-ann-id='{ann.id}' "
+                + f"title='{title}' "
+                + f"data-hl-start='{ann.start}' "
+                + f"data-hl-end='{ann.end}' "
+                + f"data-hl-orig_string='{ann.orig_string}' "
+                + f"data-hl-text-id='{ann.content_object}'>"
+                + text[start:]
+            )
+        else:
+            print(f"Annotation is overlapping: {ann}")
+    text = text.replace("\n", "<br/>")
 
     return mark_safe(prefix + text + suffix)
