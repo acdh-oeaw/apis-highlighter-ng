@@ -15,6 +15,11 @@ urlpatterns = [
         views.AnnotationsView.as_view(),
         name="annotations",
     ),
+    path(
+        "annotation/<int:pk>/delete",
+        views.AnnotationDelete.as_view(),
+        name="annotationdelete",
+    ),
     re_path(
         r"apis/relations/ajax/save/(?P<entity_type>\w+)/(?P<kind_form>\w+)/(?P<SiteID>[0-9]+)(?:/(?P<ObjectID>[0-9]*))?/$",
         views.save_ajax_form,

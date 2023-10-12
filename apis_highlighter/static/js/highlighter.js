@@ -7,6 +7,10 @@ highlighttexts.forEach(text => {
   parentn = text.parentNode;
   parentn.addEventListener("pointerup", function(event) {
     selection = document.getSelection();
+    if (selection.cloneContents().querySelectorAll("mark").length > 0) {
+      console.log("Already contains mark");
+      return;
+    }
     highlight_text = selection.anchorNode.parentElement.closest(".highlight-text");
     if (!selection.isCollapsed && highlight_text) {
 
@@ -36,7 +40,7 @@ highlighttexts.forEach(text => {
       newel.classList.add("highlighter-tmp");
       newel.classList.add("text-danger");
       selection.getRangeAt(0).surroundContents(newel);
-      $(newel).popover({content: menu(annotationdata, highlight_text), html: true});
+      $(newel).popover({content: selection_menu(annotationdata, highlight_text), html: true});
       $(newel).popover("show");
     }
   });
@@ -62,8 +66,10 @@ EntityRelationForm_response = function(response) {
 function cleanup() {
   console.log("cleanup");
   document.querySelectorAll(".highlighter-tmp").forEach(element => {
-    $(element).popover('dispose');
     element.replaceWith(element.innerHTML);
+  });
+  document.querySelectorAll(".popover").forEach(element => {
+    $(element).popover('dispose');
   });
 }
 
@@ -76,7 +82,7 @@ function replace(element) {
     });
 }
 
-function menu(annotationdata, textelement) {
+function selection_menu(annotationdata, textelement) {
   var menu = document.createElement("div");
   menu.classList.add("highlighter-menu");
   // this should definitly not be hardcoded
@@ -102,4 +108,16 @@ function menu(annotationdata, textelement) {
     menu.appendChild(div);
   });
   return menu;
+}
+
+function annotation_menu(element) {
+  console.log(element);
+  var menu = document.createElement("div");
+  menu.classList.add("highlighter-annotation-menu");
+  var dela = document.createElement("a");
+  dela.href = element.dataset.delete;
+  dela.innerHTML = "Delete";
+  menu.appendChild(dela);
+  $(element).popover({content: menu, html: true});
+  $(element).popover("show");
 }
