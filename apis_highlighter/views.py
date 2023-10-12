@@ -1,6 +1,7 @@
 import json
 
 from django.views.generic import View
+from django.views.generic.edit import DeleteView
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponse
 
@@ -24,6 +25,13 @@ class AnnotationsView(View):
 
     def get(self, request, *args, **kwargs):
         return HttpResponse(highlight_text(self.object, project_id=self.project_id))
+
+
+class AnnotationDelete(DeleteView):
+    model = Annotation
+
+    def get_template_names(self):
+        return ["confirm_delete", "apis_highlighter/annotation_confirm_delete.html"]
 
 
 # wrapper around the `save_ajax_form` method from apis_relations.views

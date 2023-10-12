@@ -45,6 +45,12 @@ def highlight_text(obj, fieldname="text", project_id=None):
             end = ann.end
             start = ann.start
             text = text[:end] + "</mark>" + text[end:]
+            annotation_delete_url = reverse(
+                "apis_highlighter:annotationdelete",
+                args=[
+                    ann.id,
+                ],
+            )
             text = (
                 text[:start]
                 + f"<mark data-ann-id='{ann.id}' "
@@ -52,7 +58,9 @@ def highlight_text(obj, fieldname="text", project_id=None):
                 + f"data-hl-start='{ann.start}' "
                 + f"data-hl-end='{ann.end}' "
                 + f"data-hl-orig_string='{ann.orig_string}' "
-                + f"data-hl-text-id='{ann.content_object}'>"
+                + f"data-hl-text-id='{ann.content_object}' "
+                + f"data-delete='{annotation_delete_url}' "
+                + "onclick='annotation_menu(this)' >"
                 + text[start:]
             )
         else:
