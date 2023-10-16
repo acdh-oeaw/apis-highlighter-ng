@@ -9,7 +9,7 @@ register = template.Library()
 
 
 def overlap(range_one, range_two) -> bool:
-    r = range(max(range_one[0], range_two[0]), min(range_one[-1], range_two[-1]))
+    r = range(max(range_one[0], range_two[0]), min(range_one[1], range_two[1]))
     return bool(r)
 
 
@@ -39,10 +39,8 @@ def highlight_text(obj, request=None, fieldname="text", project_id=None):
     text = getattr(obj, fieldname)
     annotated_ranges = []
     for ann in annotations.order_by("-start"):
-        if not any(
-            map(lambda x: overlap(range(ann.start, ann.end), x), annotated_ranges)
-        ):
-            annotated_ranges.append(range(ann.start, ann.end))
+        if not any(map(lambda x: overlap((ann.start, ann.end), x), annotated_ranges)):
+            annotated_ranges.append((ann.start, ann.end))
             title = (
                 f'Annotation "{ann.orig_string}" '
                 + f"from {ann.user} in project {ann.project}; "
