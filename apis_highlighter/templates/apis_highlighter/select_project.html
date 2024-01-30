@@ -1,12 +1,10 @@
 <form>
-  {% with request.GET.highlighter_project|add:"0" as selected_project_id %}
-    <select name="highlighter_project">
-      {% for project in projects %}
-        <option value="{{ project.id }}" 
-          {% if project.id == selected_project_id %}selected="selected"{% endif %}
-          >{{ project }}</option>
-      {% endfor %}
-    </select>
-    <input type="submit" value="Submit">
-  {% endwith %}
+  <select name="highlighter_project">
+    {% for project in projects %}
+      <option value="{{ project.id }}" 
+        {% if project.id == project_id %}selected="selected"{% endif %}
+        >{{ project }}</option>
+    {% endfor %}
+  </select>
+  <input type="submit" value="Submit">
 </form>
