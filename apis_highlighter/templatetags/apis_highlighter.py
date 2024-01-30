@@ -16,7 +16,11 @@ def overlap(range_one, range_two) -> bool:
 @register.filter()
 def highlight_text(obj, request=None, fieldname="text", project_id=None):
     if project_id is None:
-        default_project = getattr(settings, "DEFAULT_HIGHLIGTHER_PROJECT", None)
+        default_project = getattr(
+            settings,
+            "DEFAULT_HIGHLIGTHER_PROJECT",
+            AnnotationProject.objects.first().id,
+        )
         project_id = request.GET.get("highlighter_project", default_project)
 
     ct = ContentType.objects.get_for_model(obj)
@@ -76,4 +80,12 @@ def highlight_text(obj, request=None, fieldname="text", project_id=None):
 
 @register.inclusion_tag("apis_highlighter/select_project.html")
 def select_highlighter_project(request):
-    return {"request": request, "projects": AnnotationProject.objects.all()}
+    default_project = getattr(
+        settings, "DEFAULT_HIGHLIGTHER_PROJECT", AnnotationProject.objects.first().id
+    )
+    project_id = request.GET.get("highlighter_project", default_project)
+    return {
+        "request": request,
+        "projects": AnnotationProject.objects.all(),
+        "project_id": project_id,
+    }
