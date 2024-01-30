@@ -116,7 +116,7 @@ function annotation_menu(element) {
   var menu = document.createElement("div");
   menu.classList.add("highlighter-annotation-menu");
   var dela = document.createElement("a");
-  dela.href = element.dataset.delete;
+  dela.href = element.dataset.delete +"?to=" + window.location.pathname + window.location.search;
   dela.innerHTML = "Delete";
   menu.appendChild(dela);
   $(element).popover({content: menu, html: true});
