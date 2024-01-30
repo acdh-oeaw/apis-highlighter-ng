@@ -33,6 +33,11 @@ class AnnotationDelete(DeleteView):
     def get_template_names(self):
         return ["confirm_delete", "apis_highlighter/annotation_confirm_delete.html"]
 
+    def get_success_url(self):
+        if redirect_to := self.request.GET.get("to", False):
+            return redirect_to
+        return super().get_success_url()
+
 
 # wrapper around the `save_ajax_form` method from apis_relations.views
 # this lets us create the annotation while creating the relation
