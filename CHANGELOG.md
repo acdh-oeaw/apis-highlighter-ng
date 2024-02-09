@@ -1,0 +1,28 @@
+# Changelog
+
+## 0.1.0 (2024-02-09)
+
+
+### Features
+
+* add css to highlighter marks ([21403eb](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/21403ebeac58959c1001ae172adb984bf8aa4d7a))
+* add views and routes ([1e48dc0](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/1e48dc0692464e3411784f3bdded0b7222b7e692))
+* implement deletion of annotations ([3c3810c](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/3c3810cc5bbcd642ef1cf32b97b8fa7c1bba3487))
+* implement highlighting with javascript ([8f4eea2](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/8f4eea2d7c7ca7204890e1135eefa54759c7f1ae))
+* implement project selector ([a589a31](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/a589a312559bd04dac483c3e1933f274ce622bf0))
+* include needed css ([9c62df4](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/9c62df48fc8debb20055c61eee701c90349de747))
+* show name of annotationproject as default repr ([d82e68c](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/d82e68cf5f434acab9b82568c983248f057da82e))
+
+
+### Bug Fixes
+
+* bug in js ([c995fc4](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/c995fc4709ded0c5e504be8b3cc4cf22d04ff00f))
+* cleanup javascript ([ab47403](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/ab474031610e37f9811a5a985e65002a82d27d00))
+* delete view ([4e10c7c](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/4e10c7cdd1b22cfc86d3091b073e8b09fa495187))
+* fallback to first annotation project if no default exists ([2c22d2c](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/2c22d2c4e74b6c6e8bcee98c0d251bec6099d63d))
+* overlapping ranges in templatetag ([4826c30](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/4826c30693981c6cc6935b99e3d651bb519e40a0))
+* replace view logic with templatetag ([5ab0ee2](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/5ab0ee286570ff54bc92f6481d090a2446f833ff))
+* save orig_string in annotation data ([88c42e9](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/88c42e9ab20b0d7f046f29cc0db8f3753687eb30)), closes [#5](https://github.com/acdh-oeaw/apis-highlighter-ng/issues/5)
+* save user in annotation ([28a009b](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/28a009b4460f6b4679940a59895ba4c8abdb864a)), closes [#3](https://github.com/acdh-oeaw/apis-highlighter-ng/issues/3)
+* update annotations ([6137025](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/61370252e036583f245b0d201790931173c81a83)), closes [#20](https://github.com/acdh-oeaw/apis-highlighter-ng/issues/20) [#24](https://github.com/acdh-oeaw/apis-highlighter-ng/issues/24)
+* use tuples instead of ranges to compare overlap ([47423bf](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/47423bf4f9b5442515ac6659c4916e4e69991e22))
