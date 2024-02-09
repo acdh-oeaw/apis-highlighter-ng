@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.1.2...v0.1.3) (2024-02-09)
+
+
+### Bug Fixes
+
+* add basic readme ([e10e896](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/e10e896883dc14224018faf38e3b684759b848b6))
+
 ## [0.1.2](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.1.1...v0.1.2) (2024-02-09)
 
 
