@@ -5,6 +5,7 @@ description = "Highlighter for the APIS project"
 authors = ["Birger Schacht <birger.schacht@oeaw.ac.at>"]
 license = "MIT"
 packages = [{include = "apis_highlighter"}]
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
