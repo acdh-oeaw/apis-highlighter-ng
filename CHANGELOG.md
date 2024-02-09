@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.1.3...v0.1.4) (2024-02-09)
+
+
+### Bug Fixes
+
+* make signal more robust ([5bee60f](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/5bee60f6cfbb9ff7398e83dba2ed05c63761f8a0))
+
 ## [0.1.3](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.1.2...v0.1.3) (2024-02-09)
 
 
