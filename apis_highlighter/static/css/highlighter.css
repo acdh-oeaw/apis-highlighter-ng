@@ -10,6 +10,18 @@
 .select2-container--open {
     z-index: 9999999
 }
-.popover{
-    max-width: 100%;
+#highlighterpopup {
+  cursor: move;
+  min-width: 200px;
+  background-color: white;
+  padding: 1em;
+  border: 1px solid black;
+  position: absolute;
+  display: none;
+}
+#highlightermenu {
+  display: none;
+}
+.highlighter-menu-item {
+  cursor: pointer;
 }

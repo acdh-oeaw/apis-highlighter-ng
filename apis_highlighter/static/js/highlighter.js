@@ -37,12 +37,14 @@ highlighttexts.forEach(text => {
 
       // add a helper span around the selection,
       // so that we can bind the popover to something
-      var newel = document.createElement('span');
-      newel.classList.add("highlighter-tmp");
-      newel.classList.add("text-danger");
-      selection.getRangeAt(0).surroundContents(newel);
-      $(newel).popover({content: selection_menu(annotationdata, highlight_text), html: true});
-      $(newel).popover("show");
+      selspan = document.getElementById("highlightermarker").cloneNode(true);
+      selspan.classList.add("selection-span");
+      selection.getRangeAt(0).surroundContents(selspan);
+
+      popup = create_popup_near_element(selspan);
+
+      popup.appendChild(selection_menu(annotationdata, highlight_text));
+      makemovable(popup);
     }
   });
 
@@ -64,18 +66,29 @@ EntityRelationForm_response = function(response) {
   }
 }
 
+function create_popup_near_element(element) {
+  rect = element.getBoundingClientRect();
+
+  popup = document.getElementById("highlighterpopup").cloneNode(true);
+  popup.classList.add("highlighter-popup");
+  document.body.appendChild(popup);
+  popup.style.display = "block";
+  poprect = popup.getBoundingClientRect();
+  popup.style.top = rect.top + rect.height + window.scrollY + 10 + 'px';
+  popup.style.left = (rect.left + window.scrollX - (poprect.width / 2)) + 'px';
+  return popup;
+}
+
 function cleanup() {
-  console.log("cleanup");
-  document.querySelectorAll(".highlighter-tmp").forEach(element => {
+  document.querySelectorAll(".selection-span").forEach(element => {
     element.replaceWith(element.innerHTML);
   });
-  document.querySelectorAll(".popover").forEach(element => {
-    $(element).popover('dispose');
+  document.querySelectorAll(".highlighter-popup").forEach(element => {
+    element.remove();
   });
 }
 
-function replace(element) {
-  console.log("replace");
+function replace_with_data_source(element) {
   fetch(element.dataset.source)
     .then((response) => response.text())
     .then((text) => {
@@ -84,41 +97,77 @@ function replace(element) {
 }
 
 function selection_menu(annotationdata, textelement) {
-  var menu = document.createElement("div");
+  var menu = document.getElementById("highlightermenu").cloneNode(true);
   menu.classList.add("highlighter-menu");
-  // this should definitly not be hardcoded
-  var reltypes = ["person_to_place", "person_to_institution", "person_to_person"];
-  reltypes.forEach(function (item, index) {
-    var div = document.createElement("div");
-    div.innerHTML = item;
-    div.onclick = function () {
-      form = document.getElementById("form_triple_form_" + item).cloneNode(true);
-      var input = document.createElement("input");
-      input.setAttribute("type", "hidden");
-      input.setAttribute("name", "annotationdata");
+  menu.style.display = "block";
+  menu.querySelectorAll(".highlighter-menu-item").forEach(element => {
+    element.onclick = function() {
+      form = document.getElementById("form_triple_form_" + this.dataset.rel).cloneNode(true);
+      var input = document.getElementById("hiddeninput").cloneNode(true);
       input.setAttribute("value", JSON.stringify(annotationdata));
       form.appendChild(input);
       form.action = "/highlighter" + form.getAttribute("action").trim();
       document.addEventListener("formresponse", function(event) {
           cleanup();
-          replace(textelement);
+          replace_with_data_source(textelement);
       }, { once: true });
-      menu.innerHTML = '<h3>' + item + '</h3>';
+      menu.innerHTML = '<h3>' + this.innerHTML + '</h3>';
       menu.appendChild(form);
     };
-    menu.appendChild(div);
   });
   return menu;
 }
 
 function annotation_menu(element) {
-  console.log(element);
-  var menu = document.createElement("div");
+  popup = create_popup_near_element(element);
+  popup.style.width = "300px";
+  var menu = document.getElementById("highlighter-annotation-menu").cloneNode(true);
   menu.classList.add("highlighter-annotation-menu");
-  var dela = document.createElement("a");
+  popup.append(menu);
+  header = document.querySelector('.highlighter-annotation-menu #header')
+  header.innerHTML = element.title.replace("<", "&lt");
+  dela = document.querySelector('.highlighter-annotation-menu #delbtn');
   dela.href = element.dataset.delete +"?to=" + window.location.pathname + window.location.search;
-  dela.innerHTML = "Delete";
-  menu.appendChild(dela);
-  $(element).popover({content: menu, html: true});
-  $(element).popover("show");
+  makemovable(popup);
 }
+
+// this is copied from: https://phuoc.ng/collection/html-dom/make-a-draggable-element/
+function makemovable(ele) {
+  // The current position of mouse
+  let x = 0;
+  let y = 0;
+  
+  // Handle the mousedown event
+  // that's triggered when user drags the element
+  const mouseDownHandler = function (e) {
+      // Get the current mouse position
+      x = e.clientX;
+      y = e.clientY;
+  
+      // Attach the listeners to `document`
+      document.addEventListener('mousemove', mouseMoveHandler);
+      document.addEventListener('mouseup', mouseUpHandler);
+  };
+  
+  const mouseMoveHandler = function (e) {
+      // How far the mouse has been moved
+      const dx = e.clientX - x;
+      const dy = e.clientY - y;
+  
+      // Set the position of element
+      ele.style.top = `${ele.offsetTop + dy}px`;
+      ele.style.left = `${ele.offsetLeft + dx}px`;
+  
+      // Reassign the position of mouse
+      x = e.clientX;
+      y = e.clientY;
+  };
+  
+  const mouseUpHandler = function () {
+      // Remove the handlers of `mousemove` and `mouseup`
+      document.removeEventListener('mousemove', mouseMoveHandler);
+      document.removeEventListener('mouseup', mouseUpHandler);
+  };
+  
+  ele.addEventListener('mousedown', mouseDownHandler);
+} 
