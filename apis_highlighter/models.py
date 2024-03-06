@@ -34,3 +34,6 @@ class Annotation(models.Model):
     project = models.ForeignKey(
         AnnotationProject, blank=True, null=True, on_delete=models.CASCADE
     )
+
+    def __str__(self):
+        return f'Annotation "{self.orig_string}" to {self.content_object}'
