@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.1.4...v0.2.0) (2024-03-11)
+
+
+### Features
+
+* create human readable annotation string representation ([0900bd7](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/0900bd75dd6f95a391b8d43277a2cbb8a5299ce0))
+
 ## [0.1.4](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.1.3...v0.1.4) (2024-02-09)
 
 
