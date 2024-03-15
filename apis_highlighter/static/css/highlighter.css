@@ -19,7 +19,7 @@
   position: absolute;
   display: none;
 }
-#highlightermenu {
+#highlightermenu, #highlighter-annotation-menu {
   display: none;
 }
 .highlighter-menu-item {

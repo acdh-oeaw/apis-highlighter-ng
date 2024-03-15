@@ -123,6 +123,7 @@ function annotation_menu(element) {
   popup.style.width = "300px";
   var menu = document.getElementById("highlighter-annotation-menu").cloneNode(true);
   menu.classList.add("highlighter-annotation-menu");
+  menu.style.display = "block";
   popup.append(menu);
   header = document.querySelector('.highlighter-annotation-menu #header')
   header.innerHTML = element.title.replace("<", "&lt");
