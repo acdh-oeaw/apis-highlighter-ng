@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.2.0...v0.2.1) (2024-03-15)
+
+
+### Bug Fixes
+
+* hide delete skeleton menu ([668cc68](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/668cc6819c208d4777107245a0cfad64ac259dbe))
+
 ## [0.2.0](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.1.4...v0.2.0) (2024-03-11)
 
 
