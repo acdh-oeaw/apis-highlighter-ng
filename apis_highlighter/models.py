@@ -28,6 +28,7 @@ class Annotation(models.Model):
     )
     text_object_id = models.PositiveIntegerField(null=True)
     text_content_object = GenericForeignKey("text_content_type", "text_object_id")
+    text_field_name = models.CharField(default="text")
 
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
 
