@@ -13,8 +13,8 @@ def overlap(range_one, range_two) -> bool:
     return bool(r)
 
 
-@register.filter()
-def highlight_text(obj, request=None, fieldname="text", project_id=None):
+@register.simple_tag
+def highlight_text(obj, request=None, field_name="text", project_id=None):
     if project_id is None:
         default_project = getattr(
             settings,
@@ -24,8 +24,10 @@ def highlight_text(obj, request=None, fieldname="text", project_id=None):
         project_id = request.GET.get("highlighter_project", default_project)
 
     ct = ContentType.objects.get_for_model(obj)
-    annotations = Annotation.objects.filter(text_content_type=ct, text_object_id=obj.id)
-    args = [ct.id, obj.id]
+    annotations = Annotation.objects.filter(
+        text_content_type=ct, text_object_id=obj.id, text_field_name=field_name
+    )
+    args = [ct.id, obj.id, field_name]
     if project_id:
         annotations = annotations.filter(project__id=project_id)
         args.append(project_id)
@@ -35,12 +37,13 @@ def highlight_text(obj, request=None, fieldname="text", project_id=None):
         f"<div class='highlight-text'"
         f" data-text_object_id='{obj.id}'"
         f" data-text_content_type_id='{ct.id}'"
+        f" data-text_field_name='{field_name}'"
         f" data-project_id='{project_id}'"
         f" data-source='{annotations_url}'>"
     )
     suffix = "</div>"
 
-    text = getattr(obj, fieldname)
+    text = getattr(obj, field_name)
     annotated_ranges = []
     for ann in annotations.order_by("-start"):
         if not any(map(lambda x: overlap((ann.start, ann.end), x), annotated_ranges)):
