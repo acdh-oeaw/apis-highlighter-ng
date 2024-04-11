@@ -19,10 +19,16 @@ def update_annotations_offsets(sender, instance, raw, using, update_fields, **kw
                 text_content_type=content_type, text_object_id=instance.id
             ).order_by("start")
             if annotations:
-                oldtext = sender.objects.get(id=instance.id).text
-                if oldtext != instance.text:
-                    correlate_annotations(
-                        text_old=oldtext,
-                        text_new=instance.text,
-                        annotations_old=annotations,
-                    )
+                object_pre_save = sender.objects.get(id=instance.id)
+                annotated_fields = set(
+                    annotations.values_list("text_field_name", flat=True)
+                )
+                for field_name in annotated_fields:
+                    text_pre_save = getattr(object_pre_save, field_name)
+                    text_post_save = getattr(instance, field_name)
+                    if text_pre_save != text_post_save:
+                        correlate_annotations(
+                            text_old=text_pre_save,
+                            text_new=text_post_save,
+                            annotations_old=annotations,
+                        )
