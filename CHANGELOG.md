@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.2.1...v0.3.0) (2024-04-11)
+
+
+### Features
+
+* store the name of the field in the annotation ([e801219](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/e80121979372d41ddab0343dc07c6978c1a161bf)), closes [#43](https://github.com/acdh-oeaw/apis-highlighter-ng/issues/43)
+
 ## [0.2.1](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.2.0...v0.2.1) (2024-03-15)
 
 
