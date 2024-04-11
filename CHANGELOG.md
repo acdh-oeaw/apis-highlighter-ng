@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.3.0...v0.3.1) (2024-04-11)
+
+
+### Bug Fixes
+
+* update pre_save signal to work with field names ([58cc1b4](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/58cc1b4793657a9754b46244510957052eddd1b5)), closes [#46](https://github.com/acdh-oeaw/apis-highlighter-ng/issues/46)
+
 ## [0.3.0](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.2.1...v0.3.0) (2024-04-11)
 
 
