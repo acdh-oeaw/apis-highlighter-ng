@@ -2,7 +2,7 @@
   <select name="highlighter_project">
     {% for project in projects %}
       <option value="{{ project.id }}" 
-        {% if project.id == project_id %}selected="selected"{% endif %}
+        {% if project.id == project_id|add:"0" %}selected{% endif %}
         >{{ project }}</option>
     {% endfor %}
   </select>
