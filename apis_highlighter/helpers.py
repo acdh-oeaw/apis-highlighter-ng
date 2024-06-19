@@ -12,7 +12,6 @@ def calculate_word_dict(text, direction):
     word_dict = {}
 
     if word_list != []:
-
         value_step = 1 / len(word_list)
         value_current = 1
         for word in word_list[::direction]:
