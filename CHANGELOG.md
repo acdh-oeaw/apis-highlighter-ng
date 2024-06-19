@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.2](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.3.1...v0.3.2) (2024-06-19)
+
+
+### Bug Fixes
+
+* **templates:** make the selection menu reflect the selected value ([dc6edb5](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/dc6edb593e48a107221a6adba408054e9dd67d0a))
+
 ## [0.3.1](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.3.0...v0.3.1) (2024-04-11)
 
 
