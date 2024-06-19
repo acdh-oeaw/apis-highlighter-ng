@@ -2,6 +2,10 @@ import logging
 import re
 from math import inf
 
+from apis_highlighter.models import AnnotationProject
+
+from django.conf import settings
+
 logger = logging.getLogger(__name__)
 
 
@@ -83,3 +87,22 @@ def correlate_annotations(text_old, text_new, annotations_old):
             ann.save()
         else:
             ann.delete()  # TODO: we might want to delete relations as well.
+
+
+def get_annotation_project(request=None):
+    if request is not None:
+        if selected_project := request.GET.get("highlighter_project"):
+            if hasattr(request, "session"):
+                request.session["apis_highlighter_project_id"] = selected_project
+            return selected_project
+
+    default_project = getattr(
+        settings,
+        "DEFAULT_HIGHLIGTHER_PROJECT",
+        AnnotationProject.objects.first().id,
+    )
+
+    if hasattr(request, "session"):
+        return request.session.get("apis_highlighter_project_id", default_project)
+
+    return default_project

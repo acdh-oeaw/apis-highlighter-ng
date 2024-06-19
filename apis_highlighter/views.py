@@ -19,17 +19,12 @@ class AnnotationsView(View):
         ct = ContentType.objects.get_for_id(text_content_type)
         # return 404 if not exist
         self.object = ct.get_object_for_this_type(pk=text_object_id)
-        self.project_id = kwargs.get("project_id")
         self.field_name = kwargs.get("text_field_name")
 
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        return HttpResponse(
-            highlight_text(
-                self.object, field_name=self.field_name, project_id=self.project_id
-            )
-        )
+        return HttpResponse(highlight_text(self.object, field_name=self.field_name))
 
 
 class AnnotationDelete(DeleteView):
