@@ -77,6 +77,12 @@ function create_popup_near_element(element) {
   poprect = popup.getBoundingClientRect();
   popup.style.top = rect.top + rect.height + window.scrollY + 10 + 'px';
   popup.style.left = (rect.left + window.scrollX - (poprect.width / 2)) + 'px';
+  if (getCookie("highlighter_menu_top")) {
+    popup.style.top = getCookie("highlighter_menu_top");
+  }
+  if (getCookie("highlighter_menu_left")) {
+    popup.style.left = getCookie("highlighter_menu_left");
+  }
   return popup;
 }
 
@@ -159,6 +165,8 @@ function makemovable(ele) {
       // Set the position of element
       ele.style.top = `${ele.offsetTop + dy}px`;
       ele.style.left = `${ele.offsetLeft + dx}px`;
+      setCookie("highlighter_menu_top", ele.style.top, 365);
+      setCookie("highlighter_menu_left", ele.style.left, 365);
   
       // Reassign the position of mouse
       x = e.clientX;
@@ -173,3 +181,29 @@ function makemovable(ele) {
   
   ele.addEventListener('mousedown', mouseDownHandler);
 } 
+
+// from https://www.w3schools.com/js/js_cookies.asp
+// returning `false` instead of empty string
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return false;
+}
+
+// from https://www.w3schools.com/js/js_cookies.asp
+function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  let expires = "expires="+d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
