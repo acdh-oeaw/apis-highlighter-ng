@@ -2,6 +2,7 @@ from django import template
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.utils.safestring import mark_safe
+from django.utils.html import escape
 from django.urls import reverse
 from apis_highlighter.models import Annotation, AnnotationProject
 
@@ -47,11 +48,13 @@ def highlight_text(obj, request=None, field_name="text", project_id=None):
     annotated_ranges = []
     for ann in annotations.order_by("-start"):
         if not any(map(lambda x: overlap((ann.start, ann.end), x), annotated_ranges)):
+            content_object = escape(ann.content_object)
+            orig_string = escape(ann.orig_string)
             annotated_ranges.append((ann.start, ann.end))
             title = (
-                f'Annotation "{ann.orig_string}" '
+                f'Annotation "{orig_string}" '
                 + f"from {ann.user} in project {ann.project}; "
-                + f"pointing to {ann.content_object}"
+                + f"pointing to {content_object}"
             )
             end = ann.end
             start = ann.start
@@ -68,8 +71,8 @@ def highlight_text(obj, request=None, field_name="text", project_id=None):
                 + f"title='{title}' "
                 + f"data-hl-start='{ann.start}' "
                 + f"data-hl-end='{ann.end}' "
-                + f"data-hl-orig_string='{ann.orig_string}' "
-                + f"data-hl-text-id='{ann.content_object}' "
+                + f"data-hl-orig_string='{orig_string}' "
+                + f"data-hl-text-id='{content_object}' "
                 + f"data-delete='{annotation_delete_url}' "
                 + "onclick='annotation_menu(this)' >"
                 + text[start:]
