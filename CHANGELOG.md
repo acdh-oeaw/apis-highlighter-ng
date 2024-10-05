@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.4.0...v0.4.1) (2024-10-05)
+
+
+### Bug Fixes
+
+* **templatetags:** use Djangos html.escape filter to escape strings ([280ceeb](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/280ceeb4f3edbea7cea3948662f5484297ef58c5)), closes [#56](https://github.com/acdh-oeaw/apis-highlighter-ng/issues/56)
+
 ## [0.4.0](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.3.2...v0.4.0) (2024-06-19)
 
 
