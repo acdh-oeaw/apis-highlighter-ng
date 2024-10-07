@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.2](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.4.1...v0.4.2) (2024-10-07)
+
+
+### Bug Fixes
+
+* **dependencies:** loosen Django version ([ee4b3eb](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/ee4b3eb61ea35101a0927d9828c7fcd825961ab5))
+
 ## [0.4.1](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.4.0...v0.4.1) (2024-10-05)
 
 
