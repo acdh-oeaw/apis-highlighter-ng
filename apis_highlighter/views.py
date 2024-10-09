@@ -12,7 +12,6 @@ from .templatetags.apis_highlighter import highlight_text
 from .models import Annotation
 
 from apis_core.relations.views import CreateRelationForm
-from apis_core.apis_relations.models import TempTriple
 
 
 class AnnotationsView(View):
@@ -96,25 +95,3 @@ class AnnotationRelationFormView(CreateRelationForm):
             del annotationdata["text_content_type_id"]
             Annotation.objects.create(**annotationdata)
         return resp
-
-
-# wrapper around the `save_ajax_form` method from apis_relations.views
-# this lets us create the annotation while creating the relation
-def save_ajax_form(
-    request, entity_type, kind_form, SiteID, ObjectID=False, annotationdata=None
-):
-    from apis_core.apis_relations.views import save_ajax_form as orig_save_ajax_form
-
-    resp = orig_save_ajax_form(request, entity_type, kind_form, SiteID, ObjectID)
-    data = json.loads(resp.content.decode())
-    if annotationdata := request.POST.get("annotationdata"):
-        annotationdata = json.loads(annotationdata)
-        annotationdata["user"] = request.user
-        annotationdata["object_id"] = data["instance"]["relation_pk"]
-        annotationdata["content_type"] = ContentType.objects.get_for_model(TempTriple)
-        annotationdata["text_content_type"] = ContentType.objects.get_for_id(
-            annotationdata["text_content_type_id"]
-        )
-        del annotationdata["text_content_type_id"]
-        Annotation.objects.create(**annotationdata)
-    return resp
