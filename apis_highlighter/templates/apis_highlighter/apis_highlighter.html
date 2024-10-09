@@ -1,16 +1,42 @@
+{% load relations %}
+{% relations_from from_obj=object as relations %}
+{% possible_relation_types_from object as possible_relations %}
 <link itemprop="url" rel="stylesheet" href="/static/css/highlighter.css">
 <span class="text-danger" id="highlightermarker"></span>
-<div class="popup" id="highlighterpopup"></div>
-<div id="highlightermenu">
-  <h4>Create annotation:</h4>
-  <div class="btn btn-primary btn-block highlighter-menu-item"
-       data-rel="person_to_place">Person to Place</div>
-  <div class="btn btn-primary btn-block highlighter-menu-item"
-       data-rel="person_to_institution">Person to Institution</div>
-  <div class="btn btn-primary btn-block highlighter-menu-item"
-       data-rel="person_to_person">Person to Person</div>
+<div class="popup" id="highlighterpopup">
+  <div id="highlightermenu">
+    <h4>Create annotation:</h4>
+    {% get_relation_targets_from object as possible_targets %}
+    {% for target in possible_targets %}
+      <ul class="relationList">
+        {% for relation in possible_relations %}
+
+          {% if relation.model_class.get_add_permission in perms %}
+            {% url "apis_highlighter:annotation_relation" relation as baseurlform %}
+
+            {% if target.model_class in relation.model_class.subj_list and object.self_contenttype.model_class in relation.model_class.obj_list %}
+              <li>
+                <a class="btn btn-sm btn-outline-secondary"
+                   hx-get="{{ baseurlform }}?obj_content_type={{ object.self_contenttype.id }}&obj_object_id={{ object.id }}&subj_content_type={{ target.id }}&hx=true&reverse=true"
+                   hx-target="closest div">{{ relation.model_class.reverse_name }}</a>
+              </li>
+            {% endif %}
+
+            {% if target.model_class in relation.model_class.obj_list and object.self_contenttype.model_class in relation.model_class.subj_list %}
+              <li>
+                <a class="btn btn-sm btn-outline-secondary"
+                   hx-get="{{ baseurlform }}?subj_content_type={{ object.self_contenttype.id }}&subj_object_id={{ object.id }}&obj_content_type={{ target.id }}&hx=true"
+                   hx-target="closest div">{{ relation.model_class.name }}</a>
+              </li>
+            {% endif %}
+          {% endif %}
+
+        {% endfor %}
+      </ul>
+    {% endfor %}
+  </div>
 </div>
-<input id="hiddeninput" type="hidden" name="annotationdata">
+<input id="annotationdata" type="hidden" name="annotationdata">
 </input>
 <div id="highlighter-annotation-menu">
   <div id="header"></div>

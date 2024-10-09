@@ -35,6 +35,8 @@ highlighttexts.forEach(text => {
       annotationdata.start = start;
       annotationdata.end = end;
       console.log(JSON.stringify(annotationdata));
+      var input = document.getElementById("annotationdata");
+      input.setAttribute("value", JSON.stringify(annotationdata));
 
       // add a helper span around the selection,
       // so that we can bind the popover to something
@@ -43,9 +45,10 @@ highlighttexts.forEach(text => {
       selection.getRangeAt(0).surroundContents(selspan);
 
       popup = create_popup_near_element(selspan);
+      popup.querySelector("#highlightermenu").style.display = "block";
 
-      popup.appendChild(selection_menu(annotationdata, highlight_text));
       makemovable(popup);
+      htmx.process(popup);
     }
   });
 
@@ -54,18 +57,6 @@ highlighttexts.forEach(text => {
   });
 
 });
-
-// this overrides the EntityRelationForm_response from the apis core
-// codebase, so that we can add a eventlistener that reloads the text
-var native_EntityRelationForm_response = EntityRelationForm_response;
-EntityRelationForm_response = function(response) {
-  console.log("override EntityRelationForm_response");
-  native_EntityRelationForm_response(response);
-  if (response.test) {
-    evt = new Event("formresponse");
-    document.dispatchEvent(evt);
-  }
-}
 
 function create_popup_near_element(element) {
   rect = element.getBoundingClientRect();
@@ -101,28 +92,6 @@ function replace_with_data_source(element) {
     .then((text) => {
        element.outerHTML = text;
     });
-}
-
-function selection_menu(annotationdata, textelement) {
-  var menu = document.getElementById("highlightermenu").cloneNode(true);
-  menu.classList.add("highlighter-menu");
-  menu.style.display = "block";
-  menu.querySelectorAll(".highlighter-menu-item").forEach(element => {
-    element.onclick = function() {
-      form = document.getElementById("form_triple_form_" + this.dataset.rel).cloneNode(true);
-      var input = document.getElementById("hiddeninput").cloneNode(true);
-      input.setAttribute("value", JSON.stringify(annotationdata));
-      form.appendChild(input);
-      form.action = "/highlighter" + form.getAttribute("action").trim();
-      document.addEventListener("formresponse", function(event) {
-          cleanup();
-          replace_with_data_source(textelement);
-      }, { once: true });
-      menu.innerHTML = '<h3>' + this.innerHTML + '</h3>';
-      menu.appendChild(form);
-    };
-  });
-  return menu;
 }
 
 function annotation_menu(element) {
@@ -207,3 +176,12 @@ function setCookie(cname, cvalue, exdays) {
   let expires = "expires="+d.toUTCString();
   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
+document.body.addEventListener("add_annotationdata", function(evt) {
+  annotationdata = document.getElementById("annotationdata").value;
+  var input = document.getElementById("id_annotationdata");
+  input.setAttribute("value", annotationdata);
+});
+document.body.addEventListener("dismissModal", function(evt) {
+  cleanup();
+  replace_with_data_source(highlight_text);
+});
