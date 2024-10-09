@@ -1,4 +1,4 @@
-from django.urls import path, re_path
+from django.urls import path
 
 from . import views
 
@@ -20,9 +20,9 @@ urlpatterns = [
         views.AnnotationDelete.as_view(),
         name="annotationdelete",
     ),
-    re_path(
-        r"apis/relations/ajax/save/(?P<entity_type>\w+)/(?P<kind_form>\w+)/(?P<SiteID>[0-9]+)(?:/(?P<ObjectID>[0-9]*))?/$",
-        views.save_ajax_form,
-        name="save_ajax_form",
+    path(
+        "annotation/relation/<contenttype:contenttype>/form",
+        views.AnnotationRelationFormView.as_view(),
+        name="annotation_relation",
     ),
 ]
