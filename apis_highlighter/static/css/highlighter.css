@@ -13,11 +13,22 @@
 #highlighterpopup {
   cursor: move;
   min-width: 200px;
+  max-height: 66vh;
   background-color: white;
   padding: 1em;
   border: 1px solid black;
   position: absolute;
   display: none;
+  overflow-y: auto;
+}
+#highlighterpopup:has(form) {
+  max-height: unset;
+  overflow: visible;
+}
+#highlighterpopup ul {
+  margin-top: 1em;
+  list-style: none;
+  padding-left: 0;
 }
 #highlightermenu, #highlighter-annotation-menu {
   display: none;
