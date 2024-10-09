@@ -25,4 +25,9 @@ urlpatterns = [
         views.save_ajax_form,
         name="save_ajax_form",
     ),
+    path(
+        "annotation/relation/<contenttype:contenttype>/form",
+        views.AnnotationRelationFormView.as_view(),
+        name="annotation_relation",
+    ),
 ]
