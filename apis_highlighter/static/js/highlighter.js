@@ -49,6 +49,8 @@ highlighttexts.forEach(text => {
 
       makemovable(popup);
       htmx.process(popup);
+      // Call setupRelationFilter directly after creating the popup
+      setupRelationFilter(popup);
     }
   });
 
@@ -185,3 +187,19 @@ document.body.addEventListener("dismissModal", function(evt) {
   cleanup();
   replace_with_data_source(highlight_text);
 });
+function setupRelationFilter(popup) {
+    const filterInput = popup.querySelector("#relationFilterAnnotation");
+    const relationItems = popup.querySelectorAll(".relationList li");
+
+    if (filterInput) {
+        filterInput.addEventListener("input", function(evt) {
+            const filterValue = this.value.toLowerCase();
+            relationItems.forEach(function(item) {
+              item.style.display = "list-item";
+              if (!item.querySelector("a").innerHTML.toLowerCase().includes(filterValue)) {
+                item.style.display = "none";
+              }
+            });
+        });
+    }
+}
