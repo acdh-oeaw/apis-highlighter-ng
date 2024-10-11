@@ -6,6 +6,7 @@
 <div class="popup" id="highlighterpopup">
   <div id="highlightermenu">
     <h4>Create annotation:</h4>
+    <input type="text" id="relationFilterAnnotation" placeholder="filter ...">
     {% get_relation_targets_from object as possible_targets %}
     {% for target in possible_targets %}
       <ul class="relationList">
