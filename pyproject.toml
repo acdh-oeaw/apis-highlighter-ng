@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "apis-highlighter-ng"
-version = "0.4.2"
+version = "0.5.0"
 description = "Highlighter for the APIS project"
 authors = ["Birger Schacht <birger.schacht@oeaw.ac.at>"]
 license = "MIT"

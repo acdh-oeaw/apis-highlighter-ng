@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.5.0](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.4.2...v0.5.0) (2024-10-16)
+
+
+### Features
+
+* **js:** allow to filter the relations in the popup ([eb0cd83](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/eb0cd8308fb2b24282dde6a7d3cb5d7b301b8efe))
+* **templates, js:** use the new view for creating annotations ([5b2bc5e](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/5b2bc5e01f666e8df2a2177bc5053daf0b3c2500))
+* **views:** add an annotation view based on the new APIS relations ([ca856d1](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/ca856d122d3f8a0cc8540d7dc18ef00004bc3dbd))
+
 ## [0.4.2](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.4.1...v0.4.2) (2024-10-07)
 
 
