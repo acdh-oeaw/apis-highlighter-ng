@@ -11,11 +11,6 @@ urlpatterns = [
         name="annotations",
     ),
     path(
-        "annotations/<text_content_type>/<text_object_id>/<text_field_name>/<project_id>",
-        views.AnnotationsView.as_view(),
-        name="annotations",
-    ),
-    path(
         "annotation/<int:pk>/delete",
         views.AnnotationDelete.as_view(),
         name="annotationdelete",
