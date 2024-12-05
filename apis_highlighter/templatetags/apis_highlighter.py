@@ -25,7 +25,6 @@ def highlight_text(obj, request=None, field_name="text"):
     args = [ct.id, obj.id, field_name]
     if project_id:
         annotations = annotations.filter(project__id=project_id)
-        args.append(project_id)
 
     annotations_url = reverse("apis_highlighter:annotations", args=args)
     prefix = (
