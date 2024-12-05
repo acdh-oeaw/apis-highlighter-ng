@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.5.0...v0.5.1) (2024-12-05)
+
+
+### Bug Fixes
+
+* **view:** pass request to `highlight_text` ([7c0834d](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/7c0834d8b5e8b4a8f1e016a8f1ae22de1627bc71))
+
 ## [0.5.0](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.4.2...v0.5.0) (2024-10-16)
 
 
