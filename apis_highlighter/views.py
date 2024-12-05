@@ -26,7 +26,9 @@ class AnnotationsView(View):
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        return HttpResponse(highlight_text(self.object, field_name=self.field_name))
+        return HttpResponse(
+            highlight_text(self.object, request=request, field_name=self.field_name)
+        )
 
 
 class AnnotationDelete(DeleteView):
