@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: 2025 K Kollmann
+# SPDX-License-Identifier: MIT
+
+name: Add issues, PRs to Prosnet project
+
+on:
+  issues:
+    types:
+      - opened
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  add-to-project:
+    uses: acdh-oeaw/prosnet-workflows/.github/workflows/add-to-project.yml@v0.4.7
+    secrets:
+      ADD_TO_PROJECT_TOKEN: ${{ secrets.ADD_TO_PROJECT_TOKEN }}
+    with:
+      PROJECT_NUM: 5
