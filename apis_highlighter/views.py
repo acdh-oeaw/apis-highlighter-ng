@@ -61,7 +61,7 @@ class AnnotationRelationFormView(CreateRelationForm):
         """
         kwargs = super().get_form_kwargs(*args, **kwargs)
         content_type = ContentType.objects.get_for_model(self.model)
-        kwargs["hx_post_route"] = reverse(
+        kwargs["params"]["hx_post_route"] = reverse(
             "apis_highlighter:annotation_relation", args=[content_type]
         )
         return kwargs
