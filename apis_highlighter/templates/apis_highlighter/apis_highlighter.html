@@ -1,40 +1,50 @@
+{% load generic %}
 {% load relations %}
+{% load core %}
 {% relations_from from_obj=object as relations %}
 {% possible_relation_types_from object as possible_relations %}
 <link itemprop="url" rel="stylesheet" href="/static/css/highlighter.css">
 <span class="text-danger" id="highlightermarker"></span>
 <div class="popup" id="highlighterpopup">
   <div id="highlightermenu">
-    <h4>Create annotation:</h4>
-    <input type="text" id="relationFilterAnnotation" placeholder="filter ...">
-    {% get_relation_targets_from object as possible_targets %}
-    {% for target in possible_targets %}
-      <ul class="relationList">
-        {% for relation in possible_relations %}
+    {% with object.id|stringformat:"i" as object_id %}
+      <h4>Create annotation:</h4>
+      <input type="text" id="relationFilterAnnotation" placeholder="filter ...">
+      {% get_relation_targets_from object as possible_targets %}
+      {% for target in possible_targets %}
+        {% with "rel_"|add:object_id|add:"_"|add:target.name as replace_id %}
+          {% with target|model_meta:"object_name" as table_suffix %}
+            {% get_relation_between_content_types object.content_type target as relation_types %}
+            {% natural_keys_by_content_types relation_types as relation_types_natural_keys %}
+            <ul class="relationList">
+              {% for relation in possible_relations %}
 
-          {% if relation.model_class.get_add_permission in perms %}
-            {% url "apis_highlighter:annotation_relation" relation as baseurlform %}
+                {% if relation.model_class.get_add_permission in perms %}
+                  {% url "apis_highlighter:annotation_relation" relation as baseurlform %}
 
-            {% if target.model_class in relation.model_class.subj_list and object.self_contenttype.model_class in relation.model_class.obj_list %}
-              <li>
-                <a class="btn btn-sm btn-outline-secondary"
-                   hx-get="{{ baseurlform }}?obj_content_type={{ object.self_contenttype.id }}&obj_object_id={{ object.id }}&subj_content_type={{ target.id }}&hx=true&reverse=true"
-                   hx-target="closest div">{{ relation.model_class.reverse_name }}</a>
-              </li>
-            {% endif %}
+                  {% if target.model_class in relation.model_class.subj_list and object.content_type.model_class in relation.model_class.obj_list %}
+                    <li>
+                      <a class="btn btn-sm btn-outline-secondary"
+                         hx-get="{{ baseurlform }}?obj_content_type={{ object.content_type.id }}&obj_object_id={{ object.id }}&subj_content_type={{ target.id }}&relation_types={{ relation_types_natural_keys|join:"," }}&replace_id={{ replace_id }}&table_suffix={{ table_suffix }}"
+                         hx-target="closest div">{{ relation.model_class.reverse_name }}</a>
+                    </li>
+                  {% endif %}
 
-            {% if target.model_class in relation.model_class.obj_list and object.self_contenttype.model_class in relation.model_class.subj_list %}
-              <li>
-                <a class="btn btn-sm btn-outline-secondary"
-                   hx-get="{{ baseurlform }}?subj_content_type={{ object.self_contenttype.id }}&subj_object_id={{ object.id }}&obj_content_type={{ target.id }}&hx=true"
-                   hx-target="closest div">{{ relation.model_class.name }}</a>
-              </li>
-            {% endif %}
-          {% endif %}
+                  {% if target.model_class in relation.model_class.obj_list and object.content_type.model_class in relation.model_class.subj_list %}
+                    <li>
+                      <a class="btn btn-sm btn-outline-secondary"
+                         hx-get="{{ baseurlform }}?subj_content_type={{ object.content_type.id }}&subj_object_id={{ object.id }}&obj_content_type={{ target.id }}&relation_types={{ relation_types_natural_keys|join:"," }}&replace_id={{ replace_id }}&table_suffix={{ table_suffix }}"
+                         hx-target="closest div">{{ relation.model_class.name }}</a>
+                    </li>
+                  {% endif %}
+                {% endif %}
 
-        {% endfor %}
-      </ul>
-    {% endfor %}
+              {% endfor %}
+            </ul>
+          {% endwith %}
+        {% endwith %}
+      {% endfor %}
+    {% endwith %}
   </div>
 </div>
 <input id="annotationdata" type="hidden" name="annotationdata">

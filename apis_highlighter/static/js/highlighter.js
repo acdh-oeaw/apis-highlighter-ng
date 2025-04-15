@@ -84,7 +84,7 @@ function cleanup() {
     element.replaceWith(element.innerHTML);
   });
   document.querySelectorAll(".highlighter-popup").forEach(element => {
-    element.remove();
+    element.style.visibility = "hidden";
   });
 }
 
