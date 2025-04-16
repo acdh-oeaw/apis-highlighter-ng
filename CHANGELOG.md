@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.0](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.5.1...v0.6.0) (2025-04-16)
+
+
+### Features
+
+* adapt the code to work with apis-core-rdf&gt;=0.40.0 ([8f678ac](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/8f678acc6a34412b2a7939ef9d08d8fb55bd4da1))
+* **urls:** drop separate `annotations` route ([9d1b9d7](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/9d1b9d78e93745603ffed7c16d4c2bd5ebb9a268))
+
 ## [0.5.1](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.5.0...v0.5.1) (2024-12-05)
 
 
