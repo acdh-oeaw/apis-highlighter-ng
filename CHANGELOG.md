@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.6.0...v0.6.1) (2025-04-16)
+
+
+### Miscellaneous Chores
+
+* release 0.6.1 ([4903eaa](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/4903eaa3acb80ad0798f7bf63af5322d4e71f74e))
+
 ## [0.6.0](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.5.1...v0.6.0) (2025-04-16)
 
 
