@@ -25,7 +25,7 @@
                   {% if target.model_class in relation.model_class.subj_list and object.content_type.model_class in relation.model_class.obj_list %}
                     <li>
                       <a class="btn btn-sm btn-outline-secondary"
-                         hx-get="{{ baseurlform }}?obj_content_type={{ object.content_type.id }}&obj_object_id={{ object.id }}&subj_content_type={{ target.id }}&relation_types={{ relation_types_natural_keys|join:"," }}&replace_id={{ replace_id }}&table_suffix={{ table_suffix }}"
+                         hx-get="{{ baseurlform }}?obj_content_type={{ object.content_type.id }}&obj_object_id={{ object.id }}&subj_content_type={{ target.id }}&relation_types={{ relation_types_natural_keys|join:"," }}&replace_id={{ replace_id }}&table_suffix={{ table_suffix }}&reverse=True"
                          hx-target="closest div">{{ relation.model_class.reverse_name }}</a>
                     </li>
                   {% endif %}
