@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.2](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.6.1...v0.6.2) (2025-08-18)
+
+
+### Bug Fixes
+
+* **templates:** pass reverse paramter to form view ([7cabd18](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/7cabd1844539a98afd1b99812c9c240d7d52e9f9))
+
 ## [0.6.1](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.6.0...v0.6.1) (2025-04-16)
 
 
