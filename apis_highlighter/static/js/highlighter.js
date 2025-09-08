@@ -103,9 +103,9 @@ function annotation_menu(element) {
   menu.classList.add("highlighter-annotation-menu");
   menu.style.display = "block";
   popup.append(menu);
-  header = document.querySelector('.highlighter-annotation-menu #header')
+  header = popup.querySelector('#header')
   header.innerHTML = element.title.replace("<", "&lt");
-  dela = document.querySelector('.highlighter-annotation-menu #delbtn');
+  dela = popup.querySelector('#delbtn');
   dela.href = element.dataset.delete +"?to=" + window.location.pathname + window.location.search;
   makemovable(popup);
 }
