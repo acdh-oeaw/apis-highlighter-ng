@@ -1,9 +1,12 @@
 {% load generic %}
 {% load relations %}
 {% load core %}
+{% load static %}
 {% relations_from from_obj=object as relations %}
 {% possible_relation_types_from object as possible_relations %}
-<link itemprop="url" rel="stylesheet" href="/static/css/highlighter.css">
+<link itemprop="url"
+      rel="stylesheet"
+      href="{% static 'css/highlighter.css' %}">
 <span class="text-danger" id="highlightermarker"></span>
 <div class="popup" id="highlighterpopup">
   <div id="highlightermenu">
@@ -53,4 +56,4 @@
   <div id="header"></div>
   <a id="delbtn" class="btn btn-danger">Delete</a>
 </div>
-<script src="/static/js/highlighter.js"></script>
+<script src="{% static 'js/highlighter.js' %}"></script>
