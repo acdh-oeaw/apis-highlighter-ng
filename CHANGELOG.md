@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.6.3](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.6.2...v0.6.3) (2025-09-08)
+
+
+### Bug Fixes
+
+* **javascript:** update content in the correct element ([7b45a81](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/7b45a81b64d8e5e33230fb10de53151e1cfb02c7)), closes [#83](https://github.com/acdh-oeaw/apis-highlighter-ng/issues/83)
+* **templates:** drop useless close button in confirm-delete template ([bc14bf8](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/bc14bf879790b668991e7a357393a94727d56daf))
+* **templates:** replace hardcoded static uris with static templatetag ([a498e08](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/a498e089819fb91580055cef986bb2337d59afea))
+
 ## [0.6.2](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.6.1...v0.6.2) (2025-08-18)
 
 

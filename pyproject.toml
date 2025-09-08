@@ -1,6 +1,6 @@
 [project]
 name = "apis-highlighter-ng"
-version = "0.6.2"
+version = "0.6.3"
 description = "Highlighter for the APIS project"
 authors = [{ name = "Birger Schacht", email ="birger.schacht@oeaw.ac.at" }]
 license = "MIT"
