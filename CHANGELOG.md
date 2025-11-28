@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.4](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.6.3...v0.6.4) (2025-11-28)
+
+
+### Bug Fixes
+
+* **templates:** update highlighter template for apis_core changes ([ed17dbe](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/ed17dbed8642fa931a956db555feb3067265624f))
+
 ## [0.6.3](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.6.2...v0.6.3) (2025-09-08)
 
 
