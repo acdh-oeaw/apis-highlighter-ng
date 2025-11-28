@@ -25,7 +25,7 @@
                 {% if relation.model_class.get_add_permission in perms %}
                   {% url "apis_highlighter:annotation_relation" relation as baseurlform %}
 
-                  {% if target.model_class in relation.model_class.subj_list and object.content_type.model_class in relation.model_class.obj_list %}
+                  {% if target.model_class is relation.model_class.subj_model_type and object.content_type.model_class is relation.model_class.obj_model_type %}
                     <li>
                       <a class="btn btn-sm btn-outline-secondary"
                          hx-get="{{ baseurlform }}?obj_content_type={{ object.content_type.id }}&obj_object_id={{ object.id }}&subj_content_type={{ target.id }}&relation_types={{ relation_types_natural_keys|join:"," }}&replace_id={{ replace_id }}&table_suffix={{ table_suffix }}&reverse=True"
@@ -33,7 +33,7 @@
                     </li>
                   {% endif %}
 
-                  {% if target.model_class in relation.model_class.obj_list and object.content_type.model_class in relation.model_class.subj_list %}
+                  {% if target.model_class is relation.model_class.obj_model_type and object.content_type.model_class is relation.model_class.subj_model_type %}
                     <li>
                       <a class="btn btn-sm btn-outline-secondary"
                          hx-get="{{ baseurlform }}?subj_content_type={{ object.content_type.id }}&subj_object_id={{ object.id }}&obj_content_type={{ target.id }}&relation_types={{ relation_types_natural_keys|join:"," }}&replace_id={{ replace_id }}&table_suffix={{ table_suffix }}"
