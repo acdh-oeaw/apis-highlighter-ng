@@ -85,3 +85,8 @@ def select_highlighter_project(request):
         "projects": AnnotationProject.objects.all(),
         "project_id": project_id,
     }
+
+
+@register.simple_tag
+def get_content_type(obj) -> ContentType:
+    return ContentType.objects.get_for_model(obj)
