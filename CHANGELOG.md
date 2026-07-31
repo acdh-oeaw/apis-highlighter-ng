@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.6.4...v0.7.0) (2026-07-31)
+
+
+### Features
+
+* **templatetags:** introduce `get_content_type` templatetag ([f1c7f41](https://github.com/acdh-oeaw/apis-highlighter-ng/commit/f1c7f414aeaf1dbef30f9689ab75bea9e384bc93))
+
 ## [0.6.4](https://github.com/acdh-oeaw/apis-highlighter-ng/compare/v0.6.3...v0.6.4) (2025-11-28)
 
 
