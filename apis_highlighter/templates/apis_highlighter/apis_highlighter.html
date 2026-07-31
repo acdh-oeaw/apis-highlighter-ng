@@ -2,8 +2,10 @@
 {% load relations %}
 {% load core %}
 {% load static %}
+{% load get_content_type from apis_highlighter %}
 {% relations_from from_obj=object as relations %}
 {% possible_relation_types_from object as possible_relations %}
+{% get_content_type object as content_type %}
 <link itemprop="url"
       rel="stylesheet"
       href="{% static 'css/highlighter.css' %}">
@@ -17,7 +19,7 @@
       {% for target in possible_targets %}
         {% with "rel_"|add:object_id|add:"_"|add:target.name as replace_id %}
           {% with target|model_meta:"object_name" as table_suffix %}
-            {% get_relation_between_content_types object.content_type target as relation_types %}
+            {% get_relation_between_content_types content_type target as relation_types %}
             {% natural_keys_by_content_types relation_types as relation_types_natural_keys %}
             <ul class="relationList">
               {% for relation in possible_relations %}
@@ -25,18 +27,18 @@
                 {% if relation.model_class.get_add_permission in perms %}
                   {% url "apis_highlighter:annotation_relation" relation as baseurlform %}
 
-                  {% if target.model_class is relation.model_class.subj_model_type and object.content_type.model_class is relation.model_class.obj_model_type %}
+                  {% if target.model_class is relation.model_class.subj_model_type and content_type.model_class is relation.model_class.obj_model_type %}
                     <li>
                       <a class="btn btn-sm btn-outline-secondary"
-                         hx-get="{{ baseurlform }}?obj_content_type={{ object.content_type.id }}&obj_object_id={{ object.id }}&subj_content_type={{ target.id }}&relation_types={{ relation_types_natural_keys|join:"," }}&replace_id={{ replace_id }}&table_suffix={{ table_suffix }}&reverse=True"
+                         hx-get="{{ baseurlform }}?obj_content_type={{ content_type.id }}&obj_object_id={{ object.id }}&subj_content_type={{ target.id }}&relation_types={{ relation_types_natural_keys|join:"," }}&replace_id={{ replace_id }}&table_suffix={{ table_suffix }}&reverse=True"
                          hx-target="closest div">{{ relation.model_class.reverse_name }}</a>
                     </li>
                   {% endif %}
 
-                  {% if target.model_class is relation.model_class.obj_model_type and object.content_type.model_class is relation.model_class.subj_model_type %}
+                  {% if target.model_class is relation.model_class.obj_model_type and content_type.model_class is relation.model_class.subj_model_type %}
                     <li>
                       <a class="btn btn-sm btn-outline-secondary"
-                         hx-get="{{ baseurlform }}?subj_content_type={{ object.content_type.id }}&subj_object_id={{ object.id }}&obj_content_type={{ target.id }}&relation_types={{ relation_types_natural_keys|join:"," }}&replace_id={{ replace_id }}&table_suffix={{ table_suffix }}"
+                         hx-get="{{ baseurlform }}?subj_content_type={{ content_type.id }}&subj_object_id={{ object.id }}&obj_content_type={{ target.id }}&relation_types={{ relation_types_natural_keys|join:"," }}&replace_id={{ replace_id }}&table_suffix={{ table_suffix }}"
                          hx-target="closest div">{{ relation.model_class.name }}</a>
                     </li>
                   {% endif %}
